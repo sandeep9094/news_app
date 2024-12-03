@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/browser/view_article_screen.dart';
 import 'package:news_app/common/context_extensions.dart';
 import 'package:news_app/utils/logs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -134,7 +135,7 @@ class _ArticleScreen extends ArticleController {
                           ElevatedButton.icon(
                             onPressed: () => openArticleLink(widget.article.url),
                             icon: const Icon(Icons.open_in_browser),
-                            label: const Text("Open Article"),
+                            label: const Text("View Full Article"),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
                               shape: RoundedRectangleBorder(
@@ -159,7 +160,8 @@ class _ArticleScreen extends ArticleController {
   Future<void> openArticleLink(String url) async {
     logger.d("Url: $url");
     if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      // await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      context.navigateToScreen(ViewArticleScreen(url: url));
     } else {
       context.showErrorFlushBar("Could not open the URL!");
     }
